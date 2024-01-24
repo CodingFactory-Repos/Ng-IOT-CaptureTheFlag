@@ -1,5 +1,5 @@
-# Created by https://www.toptal.com/developers/gitignore/api/angular,node,intellij+all,windows,macos,linux
-# Edit at https://www.toptal.com/developers/gitignore?templates=angular,node,intellij+all,windows,macos,linux
+# Created by https://www.toptal.com/developers/gitignore/api/intellij+all,macos,windows,linux,angular,node
+# Edit at https://www.toptal.com/developers/gitignore?templates=intellij+all,macos,windows,linux,angular,node
 
 ### Angular ###
 ## Angular ##
@@ -334,4 +334,4 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# End of https://www.toptal.com/developers/gitignore/api/angular,node,intellij+all,windows,macos,linux
+# End of https://www.toptal.com/developers/gitignore/api/intellij+all,macos,windows,linux,angular,node

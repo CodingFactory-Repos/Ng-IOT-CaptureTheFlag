@@ -1,14 +1,24 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
+import { Component } from "@angular/core";
+import mqtt from 'mqtt';
+import { client } from './app.module';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
-  imports: [CommonModule, RouterOutlet],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = 'CaptureTheFlag';
+  ngOnInit() {
+    client.on('message', (topic, message) => {
+      console.log('received message: ', message.toString());
+    });
+  }
+
+  turnOnLight() {
+    client.publish('IOT/CTF/turnOnLight', 'true');
+  }
+
+  turnOffLight() {
+    client.publish('IOT/CTF/turnOnLight', 'false');
+  }
 }
