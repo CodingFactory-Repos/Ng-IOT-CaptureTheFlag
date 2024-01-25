@@ -1,2 +1,18 @@
-<button (click)="turnOnLight()">Allumer ta mere</button>
-<button (click)="turnOffLight()">Eteindre ta mere</button>
+<div class="flex items-center justify-center h-screen flex-col">
+  <h1 class="text-4xl font-bold text-gray-700">Capture the Flag <span class="text-lg">with Xbee</span></h1>
+  <div class="w-1/2 flex items-center justify-between my-10">
+    <div class="w-1/2 flex flex-col items-center justify-center">
+      <ng-container *ngIf="players.length > 0">
+      <span class="p-float-label" *ngFor="let player of players; let i = index">
+        <input pInputText [id]="'p' + (i + 1) + 'username'" [(ngModel)]="player.name"
+               [ngModelOptions]="{standalone: true}"/>
+        <label [for]="'p' + (i + 1) + 'username'">Player {{i + 1}} Username</label>
+      </span>
+      </ng-container>
+      <ng-container *ngIf="players.length <= 0">
+        <h2 class="font-bold text-gray-700 text-center">Waiting for players connected...</h2>
+      </ng-container>
+    </div>
+  </div>
+  <p-button label="Start Game" class="mt-4"></p-button>
+</div>
