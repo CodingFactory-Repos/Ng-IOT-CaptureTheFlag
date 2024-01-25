@@ -3,16 +3,36 @@
   <div class="w-1/2 flex items-center justify-between my-10">
     <div class="w-1/2 flex flex-col items-center justify-center">
       <ng-container *ngIf="players.length > 0">
-      <span class="p-float-label" *ngFor="let player of players; let i = index">
-        <input pInputText [id]="'p' + (i + 1) + 'username'" [(ngModel)]="player.name"
-               [ngModelOptions]="{standalone: true}"/>
-        <label [for]="'p' + (i + 1) + 'username'">Player {{i + 1}} Username</label>
-      </span>
+        <span class="p-float-label" *ngFor="let player of players; let i = index">
+          <input pInputText [id]="'p' + (i + 1) + 'username'" [(ngModel)]="player.name"
+                 [ngModelOptions]="{standalone: true}" />
+          <label [for]="'p' + (i + 1) + 'username'">Player {{i + 1}} Username</label>
+        </span>
       </ng-container>
       <ng-container *ngIf="players.length <= 0">
         <h2 class="font-bold text-gray-700 text-center">Waiting for players connected...</h2>
       </ng-container>
+      <table class="mt-4 centered-table" *ngIf="teams.length > 0">
+        <thead>
+          <tr>
+            <th>Team</th>
+            <th>Players</th>
+            <th>Points</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let team of teams">
+            <td>{{ team.name }}</td>
+            <td>
+              <span *ngFor="let player of team.players">
+                {{ player.name }}&nbsp;
+              </span>
+            </td>
+            <td>{{ team.totalPoints }}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
-  <p-button label="Start Game" class="mt-4"></p-button>
+  <p-button label="Start Game" class="mt-4" *ngIf="teams.length < 0"></p-button>
 </div>
