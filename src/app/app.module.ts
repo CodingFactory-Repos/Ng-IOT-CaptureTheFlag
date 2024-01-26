@@ -11,7 +11,7 @@ export const client = mqtt.connect('ws://broker.mqtt-dashboard.com:8000/mqtt');
 
 client.on('connect', () => {
   client.subscribe('IOT/CTF/turnOnLight');
-  client.subscribe('IOT/CTF/numberOfPlayers');
+  client.subscribe('IOT/CTF/players');
 });
 
 @NgModule({

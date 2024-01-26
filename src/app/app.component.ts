@@ -1,13 +1,8 @@
-import { Component } from "@angular/core";
+import {Component, ChangeDetectorRef} from "@angular/core";
 import mqtt from 'mqtt';
-import { client } from './app.module';
-
-interface Player {
-  id: string | undefined;
-  name: string | undefined;
-  team: string;
-  score: number | null | undefined;
-}
+import {client} from './app.module';
+import {Player} from "./shared/class/player-class.model";
+import {Subject} from "rxjs";
 
 interface Team {
   name: string;
@@ -15,14 +10,13 @@ interface Team {
   totalPoints: number;
 }
 
-interface Flag   {
+interface Flag {
   id: string;
-  team:string;
+  team: string;
   name: string;
-  status:string | null | undefined;
-  player:string | null | undefined;
+  status: string | null | undefined;
+  player: string | null | undefined;
 }
-
 
 @Component({
   selector: 'app-root',
@@ -30,7 +24,9 @@ interface Flag   {
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-players: { id: string, name?: string, score: number, status: "DEAD" | "ALIVE" | "HAVEFLAG", team?: "RED" | "BLUE" }[] = [];
+  protected players: Player[] = new Array<Player>();
+
+  constructor(private changeDetector: ChangeDetectorRef) {}
 
   ngOnInit() {
     this.askNumberOfUsers();
@@ -41,19 +37,12 @@ players: { id: string, name?: string, score: number, status: "DEAD" | "ALIVE" | 
 
     client.on('message', (topic, message) => {
       console.log(topic, message.toString());
-      if (topic === 'IOT/CTF/numberOfPlayers' && message.toString() !== 'get') {
-        const allPlayersIds = JSON.parse(message.toString());
-        this.players = [];
-        for (let i = 0; i < allPlayersIds.length; i++) {
-          this.players.push({id: allPlayersIds[i], score: 0, status: "ALIVE"});
-        }
-
-        console.log(this.players);
+      if (topic === 'IOT/CTF/players' && message.toString() !== 'get') {
+        this.players = JSON.parse(message.toString());
+        this.changeDetector.detectChanges();
       }
     });
   }
 
-  turnOnLight() {
-    client.publish('IOT/CTF/turnOnLight', 'true');
-  }
+  protected readonly JSON = JSON;
 }

@@ -2,38 +2,17 @@
   <h1 class="text-4xl font-bold text-gray-700">Capture the Flag <span class="text-lg">with Xbee</span></h1>
   <div class="w-1/2 flex items-center justify-between my-10">
     <div class="w-1/2 flex flex-col items-center justify-center">
-      <h1>{{players}}</h1>
-      <ng-container *ngIf="players.length > 0">
+      <ng-container *ngIf="players">
         <span class="p-float-label" *ngFor="let player of players; let i = index">
           <input pInputText [id]="'p' + (i + 1) + 'username'" [(ngModel)]="player.name"
                  [ngModelOptions]="{standalone: true}" />
-          <label [for]="'p' + (i + 1) + 'username'">Player {{i + 1}} Username</label>
+          <label [for]="'p' + (i + 1) + 'username'">{{ player.name }} Username</label>
         </span>
       </ng-container>
       <ng-container *ngIf="players.length <= 0">
         <h2 class="font-bold text-gray-700 text-center">Waiting for players connected...</h2>
       </ng-container>
-      <table class="mt-4 centered-table" *ngIf="teams.length > 0">
-        <thead>
-          <tr>
-            <th>Team</th>
-            <th>Players</th>
-            <th>Points</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let team of teams">
-            <td>{{ team.name }}</td>
-            <td>
-              <span *ngFor="let player of team.players">
-                {{ player.name }}&nbsp;
-              </span>
-            </td>
-            <td>{{ team.totalPoints }}</td>
-          </tr>
-        </tbody>
-      </table>
     </div>
   </div>
-  <p-button label="Start Game" class="mt-4" *ngIf="teams.length < 0"></p-button>
+  <p-button label="Start Game" class="mt-4" *ngIf="players && players.length > 1"></p-button>
 </div>
