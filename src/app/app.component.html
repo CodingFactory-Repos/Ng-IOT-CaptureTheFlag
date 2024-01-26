@@ -2,6 +2,7 @@
   <h1 class="text-4xl font-bold text-gray-700">Capture the Flag <span class="text-lg">with Xbee</span></h1>
   <div class="w-1/2 flex items-center justify-between my-10">
     <div class="w-1/2 flex flex-col items-center justify-center">
+      <h1>{{players}}</h1>
       <ng-container *ngIf="players.length > 0">
       <span class="p-float-label" *ngFor="let player of players; let i = index">
         <input pInputText [id]="'p' + (i + 1) + 'username'" [(ngModel)]="player.name"

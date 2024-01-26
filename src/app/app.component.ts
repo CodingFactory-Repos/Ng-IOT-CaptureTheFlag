@@ -8,7 +8,7 @@ import { client } from './app.module';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  players: { name: string | undefined, score: number}[] = [];
+  players: { id: string, name?: string, score: number, status: "DEAD" | "ALIVE" | "HAVEFLAG", team?: "RED" | "BLUE" }[] = [];
 
   ngOnInit() {
     this.askNumberOfUsers();
@@ -18,15 +18,16 @@ export class AppComponent {
     client.publish('IOT/CTF/numberOfPlayers', 'get');
 
     client.on('message', (topic, message) => {
-      console.log(topic, Number(message.toString()));
+      console.log(topic, message.toString());
       if (topic === 'IOT/CTF/numberOfPlayers' && message.toString() !== 'get') {
+        const allPlayersIds = JSON.parse(message.toString());
         this.players = [];
-        for (let i = 0; i < Number(message.toString()); i++) {
-          this.players.push({name: undefined, score: 0});
+        for (let i = 0; i < allPlayersIds.length; i++) {
+          this.players.push({id: allPlayersIds[i], score: 0, status: "ALIVE"});
         }
-      }
 
-      console.log(this.players)
+        console.log(this.players);
+      }
     });
   }
 
